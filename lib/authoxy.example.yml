@@ -1,0 +1,11 @@
+laben: 
+  local_port: 8079
+  upstream_proxy: http://172.24.1.50:8080
+  password: 
+  user: 
+  
+thales: 
+  local_port: 8081
+  upstream_proxy: http://localhost:8079
+  password: 
+  user: 
