@@ -66,7 +66,7 @@ class Authoxy
 
     @proxies ||= []
     proxy_definitions.each do |(name, proxy)|
-      @proxies << Authoxy.new name, proxy['local_port'].to_i, proxy['upstream_proxy'], proxy['user'], proxy['password'] || ask("password (#{name}): ")
+      @proxies << Authoxy.new( name, proxy['local_port'].to_i, proxy['upstream_proxy'], proxy['user'], proxy['password'] || ask("password (#{name}): ") )
     end
     
     trap('INT') {
