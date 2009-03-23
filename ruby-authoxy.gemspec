@@ -12,10 +12,10 @@ Gem::Specification.new do |s|
   s.authors     = 'Elia Schito'
   s.email       = 'perlelia@gmail.com'
   
-  #FILES
+  # FILES
   s.files = %q[lib/authoxy.rb lib/authoxy.example.yml]
   s.has_rdoc = true
-  s.require_paths = ['lib']
+  # s.require_paths = ['lib']
   # s.executables = %q[bin/authoxy]
   
   # DEPENDENCIES
