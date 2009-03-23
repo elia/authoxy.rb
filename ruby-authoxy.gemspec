@@ -13,7 +13,7 @@ Gem::Specification.new do |s|
   s.email       = 'perlelia@gmail.com'
   
   # FILES
-  s.files = %q[lib/authoxy.rb lib/authoxy.example.yml]
+  s.files = %w[lib/authoxy.rb lib/authoxy.example.yml]
   s.has_rdoc = true
   # s.require_paths = ['lib']
   # s.executables = %q[bin/authoxy]
