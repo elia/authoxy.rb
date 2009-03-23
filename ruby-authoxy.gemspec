@@ -1,6 +1,4 @@
 #!/usr/bin/env ruby
-require 'rake'
-require 'rubygems'
 
 Gem::Specification.new do |s|
   
@@ -15,13 +13,11 @@ Gem::Specification.new do |s|
   s.email       = 'perlelia@gmail.com'
   
   #FILES
-  s.files = Dir['lib/authoxy.*']
-  # s.has_rdoc = false
+  s.files = %q[lib/authoxy.rb lib/authoxy.example.yml]
+  s.has_rdoc = true
   s.require_paths = ['lib']
-  # s.executables = Dir[Rails.root + '/bin/cmc*'].map {|f| File.basename(f) }
+  # s.executables = %q[bin/authoxy]
   
   # DEPENDENCIES
   s.required_ruby_version =                 '>= 1.8.6'
 end
-
-puts '=> Generating Gem...'
