@@ -16,7 +16,7 @@ Gem::Specification.new do |s|
   s.files = %w[lib/authoxy.rb lib/authoxy.example.yml]
   s.has_rdoc = true
   s.require_paths = ['lib']
-  # s.executables = Dir[Rails.root + '/bin/cmc*'].map {|f| File.basename(f) }
+  s.executables = %q[authoxy]
   
   # DEPENDENCIES
   s.required_ruby_version = '>= 1.8.6'

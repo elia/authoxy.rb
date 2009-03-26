@@ -1,0 +1,15 @@
+#!/usr/bin/env ruby
+require 'rubygems'
+require 'authoxy'
+
+default_path = File.expand_path('~/.authoxy.yml')
+path   = (ARGV.first and File.exist?(ARGV.first)) ? ARGV.first : nil
+path ||= default_path if File.exist?(default_path)
+
+if path
+  Authoxy.load path
+else
+  puts "Usage: #{$0} <file-path>  # <file-path> is the path of the YML configuration"
+  puts "Usage: #{$0}              # If no path is provided Authoxy will look in #{default_path}"
+  exit 1
+end
