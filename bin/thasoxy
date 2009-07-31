@@ -1,0 +1,24 @@
+#!/usr/bin/env ruby
+# coding: utf-8
+
+require File.dirname(__FILE__)+'/../lib/tasi_authoxy.rb'
+require 'yaml'
+
+default_path = File.expand_path('~/.tasi_authoxy.yml')
+path   = (ARGV.first and File.exist?(ARGV.first)) ? ARGV.first : nil
+path ||= default_path if File.exist?(default_path)
+
+if path
+  config = YAML.load_file(path)
+  user         = config['user']
+  password     = config['password']
+  tgi          = config['tgi']
+  tgi_password = config['tgi_password']
+  
+  proxy = TasiAuthoxy.new user, password, tgi, tgi_password, 8088
+  proxy.start
+else
+  puts "Usage: #{$0} <file-path>  # <file-path> is the path of the YML configuration"
+  puts "Usage: #{$0}              # If no path is provided Authoxy will look in #{default_path}"
+  exit 1
+end

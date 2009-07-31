@@ -18,20 +18,23 @@ class Authoxy
   # 
   # <code> my_proxy = Authoxy.new 'office', 8080, 'http://my.office.proxy.com:8080' </code>
   # 
-  def initialize name, local_port, upstream_proxy, user, password
+  def initialize name, local_port, upstream_proxy, user, password, options = {}
     @name = name
     proxy_uri          = URI::parse(upstream_proxy) 
     proxy_uri.user     = user
     proxy_uri.password = password
-    
-    # Set up the proxy itself
-    @server = WEBrick::HTTPProxyServer.new(
+    config = {
       :LogFile => false,
       :Port => local_port.to_i,
       :ProxyVia => true,
-      :ProxyURI => proxy_uri
-    )
+      :ProxyURI => proxy_uri,
+    }.merge(options)
+    
+    # Set up the proxy itself
+    @server = WEBrick::HTTPProxyServer.new(config)
   end
+  
+
   
   # Starts the proxy
   def start
