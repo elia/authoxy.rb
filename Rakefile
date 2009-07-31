@@ -1,3 +1,10 @@
+task :gem do
+  puts "Packaging..."
+  gemspec = File.join('ruby-authoxy.gemspec')
+  sh('gem', 'build', gemspec)
+end
+
+
 namespace :gem do
   desc 'Generates/refreshes manifest (i.e. the list of files in order to create the gem).'
   task :manifest do
