@@ -1,6 +1,8 @@
+NAME = 'authoxy'
+
 task :gem do
   puts "Packaging..."
-  gemspec = File.join('ruby-authoxy.gemspec')
+  gemspec = File.join("#{NAME}.gemspec")
   sh('gem', 'build', gemspec)
 end
 
@@ -19,7 +21,7 @@ namespace :gem do
   desc 'Packages the application into a gem.'
   task :package => ['Manifest.txt'] do
     puts "Packaging..."
-    gemspec = File.join('ruby-authoxy.gemspec')
+    gemspec = File.join("#{NAME}.gemspec")
     sh('gem', 'build', gemspec)
   end
   
