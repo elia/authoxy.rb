@@ -4,7 +4,7 @@ Gem::Specification.new do |s|
   
   # GEM INFO
   s.name        = 'authoxy'
-  s.version     = '1.2'
+  s.version     = '1.2.1'
   s.summary     = 'A ruby version of Authoxy (www.hrsoftworks.net).'
   s.description = 'A Ruby version of the popular Authoxy program by Heath Raftery (http://www.hrsoftworks.net/Products.php#authoxy)'
   

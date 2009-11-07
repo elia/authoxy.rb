@@ -5,8 +5,6 @@ require 'uri'
 
 require 'rubygems'
 
-TGI = YAML.load_file('~/.tgi')
-
 ##
 # RemoteFetcher handles the details of fetching gems and gem information from
 # a remote source.
@@ -301,8 +299,9 @@ class Gem::RemoteFetcher
         form[name] = value
       end
       form['lang']     = 'en'
-      form['USER']     = TGI['user']
-      form['PASSWORD'] = TGI['password']
+      tgi = YAML.load_file(File.expand_path('~/.tgi'))
+      form['USER']     = tgi['user']
+      form['PASSWORD'] = tgi['password']
       say ">>>>>>TARGET: #{form['TARGET'][0..50]}"
       
       request = Net::HTTP::Post.new 'https://websso.corp.thales/login/sm_login.fcc' # 

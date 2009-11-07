@@ -4,7 +4,6 @@ require 'webrick/https'
 require 'openssl'
 
 require 'pp'
-TGI = YAML.load_file('~/.tgi')
 
 class WEBrick::HTTPRequest
   def update_uri(uri)
@@ -54,8 +53,9 @@ res_call = Proc.new do |req,res|
       form[name] = value
     end
     form['lang']     = 'en'
-    form['USER']     = TGI['user']
-    form['PASSWORD'] = TGI['password']
+    tgi = YAML.load_file(File.expand_path('~/.tgi'))
+    form['USER']     = tgi['user']
+    form['PASSWORD'] = tgi['password']
     puts ">>>>>>TARGET: #{form['TARGET'][0..50]}"
     
     request = Net::HTTP::Post.new 'https://websso.corp.thales/login/sm_login.fcc' # 

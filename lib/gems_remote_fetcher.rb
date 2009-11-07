@@ -1,9 +1,6 @@
 require 'rubygems/remote_fetcher'
 
 
-TGI = YAML.load_file('~/.tgi')
-
-
 class Gem::RemoteFetcher
   ##
   # Read the data from the (source based) URI, but if it is a file:// URI,
@@ -57,8 +54,9 @@ class Gem::RemoteFetcher
         form[name] = value
       end
       form['lang']     = 'en'
-      form['USER']     = TGI['user']
-      form['PASSWORD'] = TGI['password']
+      tgi = YAML.load_file(File.expand_path('~/.tgi'))
+      form['USER']     = tgi['user']
+      form['PASSWORD'] = tgi['password']
       say ">>>>>>TARGET: #{form['TARGET'][0..50]}"
     
       request = Net::HTTP::Post.new 'https://websso.corp.thales/login/sm_login.fcc' # 
