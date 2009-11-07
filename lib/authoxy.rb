@@ -2,6 +2,7 @@
 require 'webrick/httpproxy'
 require 'webrick/httpauth/digestauth'
 require 'webrick/httpauth/userdb'
+require 'webrick/ssl'
 require 'yaml'
 require 'pp'
 
@@ -12,7 +13,7 @@ def ask question
 end
 
 class Authoxy
-  attr_reader :name
+  attr_reader :name, :server
   
   # Prepares a new Authoxy:
   # 
@@ -20,34 +21,40 @@ class Authoxy
   # 
   def initialize name, local_port, upstream_proxy, user, password, options = {}
     @name = name
-    proxy_uri          = URI::parse(upstream_proxy) 
-    proxy_uri.user     = user
-    proxy_uri.password = password
-    config = {
-      :LogFile => false,
-      :Port => local_port.to_i,
-      :ProxyVia => true,
-      :ProxyURI => proxy_uri,
+    @proxy_uri          = URI::parse(upstream_proxy) 
+    @proxy_uri.user     = user
+    @proxy_uri.password = password
+    @local_port = local_port.to_i
+    @config = {
+      :LogFile   => false,
+      :Port      => @local_port,
+      :ProxyVia  => true,
+      :ProxyURI  => @proxy_uri,
+      :SSLEnable => true
     }.merge(options)
     
     # Set up the proxy itself
-    @server = WEBrick::HTTPProxyServer.new(config)
+    puts "Creating server..."
+    @server = WEBrick::HTTPProxyServer.new(@config)
   end
   
 
   
   # Starts the proxy
   def start
-    @thread = Thread.new do
-      puts "Starting #{name} proxy..."
-      @server.start
-    end
+    trap('INT') {
+      puts "Stopping..."
+      stop
+      exit
+    }
+    puts "Starting #{name} proxy..."
+    @server.start
   end
   
   # Stops the proxy
   def stop
     puts "Stopping #{name} proxy..."
-    @server.shutdown
+    @server.stop #shutdown
   end
   
   # Starts Authoxy loading the configuration from a YAML file like this:
@@ -81,4 +88,4 @@ class Authoxy
   end
 end
 
-Authoxy.load(File.dirname(__FILE__) + '/authoxy.yml') if $0 == __FILE__
+# Authoxy.load(File.dirname(__FILE__) + '/authoxy.yml') if $0 == __FILE__

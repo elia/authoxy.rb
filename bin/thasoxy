@@ -9,6 +9,11 @@ path   = (ARGV.first and File.exist?(ARGV.first)) ? ARGV.first : nil
 path ||= default_path if File.exist?(default_path)
 
 if path
+  puts "Starting..."
+  trap('TERM') {
+    puts "Stopping..."
+    exit
+  }
   config = YAML.load_file(path)
   user         = config['user']
   password     = config['password']
